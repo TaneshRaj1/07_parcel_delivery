@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: Run Pytest    
 on: push 
 paths:                                  # NEW: only run when these change
@@ -18,12 +19,47 @@ jobs:
         with:    
           python-version: '3.12' 
           cache: 'pip'
+=======
+name: Run Pytest
 
-      - name: Install pytest  
-        run: |    
-          python -m pip install --upgrade pip    
-          pip install pytest    
+on:
+  push:
+    paths:
+      - "**.py"
+      - "requirements.txt"
+      - "pytest.ini"
+      - ".github/workflows/*.yml"
+>>>>>>> b78cf7d377508f6a9e6382b83868bdf5ed1feeb4
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+<<<<<<< HEAD
       - name: Run Pytest    
         run: |    
            python -m pytest -v -ra --tb=short
+=======
+jobs:
+  run-pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Pytest
+        run: python -m pytest -v -ra --tb=short
+>>>>>>> b78cf7d377508f6a9e6382b83868bdf5ed1feeb4
